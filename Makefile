@@ -39,6 +39,8 @@ C_SOURCES = \
   Src/gpio.c \
   Src/main.c \
   Src/usb_device.c \
+	Src/ADF7023.c \
+	Src/Communication.c \
   Drivers/CMSIS/Device/ST/STM32L0xx/Source/Templates/system_stm32l0xx.c \
   Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tim.c \
   Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.c \
