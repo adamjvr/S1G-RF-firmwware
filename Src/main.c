@@ -49,7 +49,7 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
-#include "ADF7023_Config.h"
+#include "ADF7023.h"
 
 /* USER CODE END Includes */
 

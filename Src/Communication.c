@@ -37,65 +37,44 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
 *******************************************************************************/
+/*
+All Code Not Belonging to Analog Devices or ST Microelctronicd falls under the
+MIT License
+*
+The MIT License (MIT)
+Copyright (c) 2016 Adam Vadala-Roth
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+*/
 
 /******************************************************************************/
 /* Include Files                                                              */
 /******************************************************************************/
 #include "Communication.h"
+#include "stm32l0xx_hal.h"
+#include "spi.h"
+#include "gpio.h"
 
-/***************************************************************************//**
- * @brief Initializes the I2C communication peripheral.
- *
- * @param clockFreq - I2C clock frequency (Hz).
- *                    Example: 100000 - I2C clock frequency is 100 kHz.
- * @return status - Result of the initialization procedure.
- *                  Example: 1 - if initialization was successful;
- *                           0 - if initialization was unsuccessful.
-*******************************************************************************/
-unsigned char I2C_Init(unsigned long clockFreq)
-{
-    /* Add your code here. */
-}
+/******************************************************************************/
+/* Variables                                                                  */
+/******************************************************************************/
 
-/***************************************************************************//**
- * @brief Writes data to a slave device.
- *
- * @param slaveAddress - Address of the slave device.
- * @param dataBuffer - Pointer to a buffer storing the transmission data.
- * @param bytesNumber - Number of bytes to write.
- * @param stopBit - Stop condition control.
- *                  Example: 0 - A stop condition will not be sent;
- *                           1 - A stop condition will be sent.
- *
- * @return status - Number of written bytes.
-*******************************************************************************/
-unsigned char I2C_Write(unsigned char slaveAddress,
-                        unsigned char* dataBuffer,
-                        unsigned char bytesNumber,
-                        unsigned char stopBit)
-{
-    /* Add your code here. */
-}
-
-/***************************************************************************//**
- * @brief Reads data from a slave device.
- *
- * @param slaveAddress - Address of the slave device.
- * @param dataBuffer - Pointer to a buffer that will store the received data.
- * @param bytesNumber - Number of bytes to read.
- * @param stopBit - Stop condition control.
- *                  Example: 0 - A stop condition will not be sent;
- *                           1 - A stop condition will be sent.
- *
- * @return status - Number of read bytes.
-*******************************************************************************/
-unsigned char I2C_Read(unsigned char slaveAddress,
-                       unsigned char* dataBuffer,
-                       unsigned char bytesNumber,
-                       unsigned char stopBit)
-{
-    /* Add your code here. */
-}
 
 /***************************************************************************//**
  * @brief Initializes the SPI communication peripheral.
@@ -126,6 +105,8 @@ unsigned char SPI_Init(unsigned char lsbFirst,
                        unsigned char clockEdg)
 {
     /* Add your code here. */
+    MX_SPI2_Init();
+    return 1;
 }
 
 /***************************************************************************//**
@@ -142,7 +123,8 @@ unsigned char SPI_Read(unsigned char slaveDeviceId,
                        unsigned char* data,
                        unsigned char bytesNumber)
 {
-    /* Add your code here. */
+    HAL_SPI_Receive(&hspi2, data, bytesNumber,10);
+    return bytesNumber;
 }
 
 /***************************************************************************//**
@@ -159,4 +141,27 @@ unsigned char SPI_Write(unsigned char slaveDeviceId,
                         unsigned char bytesNumber)
 {
     /* Add your code here. */
+    HAL_SPI_Transmit(&hspi2, data, bytesNumber, 10);
+    return bytesNumber;
+}
+
+
+/***************************************************************************//**
+ * @brief Sets SPI NSS (chip select) to logic state Low
+ * @param void
+ * @return void
+*******************************************************************************/
+void SPI_NSS_SetLow(void)
+{
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, 0);
+}
+
+/***************************************************************************//**
+ * @brief Sets SPI NSS (chip select) to logic state High
+ * @param void
+ * @return void
+*******************************************************************************/
+void SPI_NSS_SetHigh(void)
+{
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, 1);
 }

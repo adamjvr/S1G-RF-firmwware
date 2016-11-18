@@ -5,7 +5,7 @@
 ######################################
 # target
 ######################################
-TARGET = S1G_RF_STM32_Drivers
+TARGET = S1G_RF_firmware
 
 ######################################
 # building variables

@@ -50,9 +50,10 @@
 /******************************************************************************/
 /*************************** Macros Definitions *******************************/
 /******************************************************************************/
-#define ADF7023_CS_ASSERT   CS_PIN_LOW
-#define ADF7023_CS_DEASSERT CS_PIN_HIGH
-#define ADF7023_MISO        MISO_PIN
+
+#define ADF7023_CS_ASSERT   SPI_NSS_SetLow();
+#define ADF7023_CS_DEASSERT SPI_NSS_SetHigh();
+//#define ADF7023_MISO        MISO_PIN
 
 /******************************************************************************/
 /************************ Variables Definitions *******************************/
@@ -100,6 +101,8 @@ char ADF7023_Init(void)
              0,         // Idle state for clock is a high level; active state is a low level.
              1);        // Serial output data changes on transition from idle clock state to active clock state.
     ADF7023_CS_ASSERT;
+
+    /*
     while ((miso == 0) && (timeout < 1000))
     {
         miso = ADF7023_MISO;
@@ -113,6 +116,7 @@ char ADF7023_Init(void)
     {
         ADF7023_GetStatus(&status);
     }
+    */
     ADF7023_SetRAM(0x100, 64, (unsigned char*)&ADF7023_BBRAMCurrent);
     ADF7023_SetCommand(CMD_CONFIG_DEV);
 

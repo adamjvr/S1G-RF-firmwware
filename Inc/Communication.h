@@ -48,21 +48,6 @@
 /* Functions Prototypes                                                       */
 /******************************************************************************/
 
-/*! Initializes the I2C communication peripheral. */
-unsigned char I2C_Init(unsigned long clockFreq);
-
-/*! Writes data to a slave device. */
-unsigned char I2C_Write(unsigned char slaveAddress,
-                        unsigned char* dataBuffer,
-                        unsigned char bytesNumber,
-                        unsigned char stopBit);
-
-/*! Reads data from a slave device. */
-unsigned char I2C_Read(unsigned char slaveAddress,
-                       unsigned char* dataBuffer,
-                       unsigned char bytesNumber,
-                       unsigned char stopBit);
-
 /*! Initializes the SPI communication peripheral. */
 unsigned char SPI_Init(unsigned char lsbFirst,
                        unsigned long clockFreq,
@@ -78,5 +63,9 @@ unsigned char SPI_Read(unsigned char slaveDeviceId,
 unsigned char SPI_Write(unsigned char slaveDeviceId,
                         unsigned char* data,
                         unsigned char bytesNumber);
+
+void SPI_NSS_SetLow();
+
+void SPI_NSS_SetHigh();
 
 #endif /* _COMMUNICATION_H_ */
