@@ -101,6 +101,7 @@ char ADF7023_Init(void)
              0,         // Idle state for clock is a high level; active state is a low level.
              1);        // Serial output data changes on transition from idle clock state to active clock state.
     ADF7023_CS_ASSERT;
+    // Add a Delay HERE 11.18.2016
 
     /*
     while ((miso == 0) && (timeout < 1000))
